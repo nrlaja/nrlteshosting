@@ -1,0 +1,411 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); color: var(--color-text-primary); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  /* NAV */
+  nav { background: #1B4D2E; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  nav .logo { color: #fff; font-size: 17px; font-weight: 500; letter-spacing: 0.3px; }
+  nav .logo span { color: #F5C842; }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul li a { color: rgba(255,255,255,0.82); font-size: 13px; text-decoration: none; transition: color .2s; }
+  nav ul li a:hover { color: #F5C842; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #1B4D2E 0%, #276B3E 60%, #3A8A52 100%); padding: 5rem 2rem 4rem; text-align: center; color: #fff; }
+  .hero .badge { display: inline-block; background: rgba(245,200,66,0.18); border: 1px solid rgba(245,200,66,0.4); color: #F5C842; font-size: 12px; padding: 4px 14px; border-radius: 20px; margin-bottom: 1.2rem; letter-spacing: 0.5px; }
+  .hero h1 { font-size: 32px; font-weight: 500; margin-bottom: 0.8rem; line-height: 1.3; }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.78); max-width: 540px; margin: 0 auto 2rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: #F5C842; color: #1B4D2E; border: none; padding: 11px 26px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.5); padding: 10px 26px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: border-color .2s, color .2s; }
+  .btn-outline:hover { border-color: #fff; }
+
+  /* STATS BAR */
+  .stats-bar { background: #fff; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; justify-content: center; flex-wrap: wrap; }
+  .stat-item { padding: 1.2rem 2.5rem; text-align: center; border-right: 0.5px solid var(--color-border-tertiary); }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .num { font-size: 22px; font-weight: 500; color: #1B4D2E; }
+  .stat-item .lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 3.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 12px; color: #1B4D2E; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .section-title { font-size: 24px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.6rem; }
+  .section-sub { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; max-width: 560px; }
+
+  /* KATEGORI CARDS */
+  .kategori-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 2rem; }
+  .kat-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 1.4rem 1rem; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; }
+  .kat-card:hover { border-color: #1B4D2E; background: #f4faf6; }
+  .kat-icon { font-size: 28px; margin-bottom: 10px; }
+  .kat-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .kat-count { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+
+  /* PRODUK UNGGULAN */
+  .produk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 2rem; }
+  .produk-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+  .produk-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+  .produk-body { padding: 1rem 1.1rem 1.2rem; }
+  .produk-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .badge-kuliner { background: #FEF3C7; color: #92400E; }
+  .badge-kerajinan { background: #DBEAFE; color: #1E40AF; }
+  .badge-pertanian { background: #D1FAE5; color: #065F46; }
+  .badge-fashion { background: #FCE7F3; color: #9D174D; }
+  .produk-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .produk-desc { font-size: 12px; color: var(--color-text-secondary); margin-top: 5px; line-height: 1.5; }
+  .produk-price { font-size: 14px; font-weight: 500; color: #1B4D2E; margin-top: 10px; }
+
+  /* PROFIL UMKM */
+  .umkm-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 14px; }
+  .umkm-row { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 16px; }
+  .umkm-avatar { width: 46px; height: 46px; border-radius: 50%; background: #D1FAE5; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .umkm-info { flex: 1; }
+  .umkm-nm { font-size: 15px; font-weight: 500; }
+  .umkm-meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+  .umkm-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #ECFDF5; color: #065F46; flex-shrink: 0; }
+  .umkm-status { width: 8px; height: 8px; border-radius: 50%; background: #10B981; flex-shrink: 0; }
+
+  /* BERITA */
+  .berita-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 2rem; }
+  .berita-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 1.2rem 1.25rem; }
+  .berita-tgl { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; }
+  .berita-judul { font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--color-text-primary); }
+  .berita-ringkas { font-size: 12px; color: var(--color-text-secondary); margin-top: 8px; line-height: 1.6; }
+  .berita-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #F0FDF4; color: #166534; margin-top: 10px; }
+
+  /* PROGRAM */
+  .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 2rem; }
+  .prog-card { border-radius: 12px; padding: 1.4rem 1.2rem; border: 0.5px solid var(--color-border-tertiary); }
+  .prog-icon { font-size: 24px; margin-bottom: 10px; }
+  .prog-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+  .prog-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+  .prog-tgl { font-size: 11px; margin-top: 10px; font-weight: 500; }
+
+  /* KONTAK */
+  .kontak-wrap { background: #1B4D2E; border-radius: 16px; padding: 3rem 2rem; text-align: center; margin-top: 0; }
+  .kontak-wrap h2 { color: #fff; font-size: 22px; font-weight: 500; margin-bottom: 0.6rem; }
+  .kontak-wrap p { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 2rem; }
+  .kontak-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; max-width: 720px; margin: 0 auto; }
+  .kontak-item { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 1rem; }
+  .kontak-item .ki-icon { font-size: 20px; margin-bottom: 8px; }
+  .kontak-item .ki-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+  .kontak-item .ki-val { font-size: 13px; color: #fff; font-weight: 500; }
+
+  /* FOOTER */
+  footer { background: #111; color: rgba(255,255,255,0.5); text-align: center; font-size: 12px; padding: 1.4rem; }
+  footer span { color: #F5C842; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 0; }
+
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    .hero h1 { font-size: 24px; }
+    .stat-item { padding: 1rem 1.2rem; }
+  }
+</style>
+
+<h2 class="sr-only">Halaman profil UMKM Kabupaten Sidenreng Rappang (Sidrap), Sulawesi Selatan, berisi informasi kategori usaha, produk unggulan, daftar UMKM, berita, program, dan kontak dinas.</h2>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">UMKM <span>Sidrap</span></div>
+  <ul>
+    <li><a href="#kategori">Kategori</a></li>
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#pelaku">Pelaku Usaha</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Kabupaten Sidenreng Rappang · Sulawesi Selatan</div>
+  <h1>Portal UMKM<br>Sidenreng Rappang</h1>
+  <p>Pusat informasi usaha mikro, kecil, dan menengah Sidrap — temukan produk unggulan, pelaku usaha lokal, dan program pengembangan bisnis.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="sendPrompt('Tampilkan daftar lengkap UMKM di Sidenreng Rappang beserta produk unggulannya')">Jelajahi UMKM ↗</button>
+    <button class="btn-outline" onclick="sendPrompt('Bagaimana cara mendaftarkan UMKM baru di Sidenreng Rappang?')">Daftarkan Usaha Anda</button>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="num">4.200+</div><div class="lbl">Total UMKM</div></div>
+  <div class="stat-item"><div class="num">12</div><div class="lbl">Kecamatan</div></div>
+  <div class="stat-item"><div class="num">8</div><div class="lbl">Sektor Usaha</div></div>
+  <div class="stat-item"><div class="num">Rp 120M+</div><div class="lbl">Omzet Tahunan</div></div>
+  <div class="stat-item"><div class="num">15.000+</div><div class="lbl">Tenaga Kerja</div></div>
+</div>
+
+<!-- KATEGORI -->
+<section id="kategori">
+  <div class="section-label">Sektor Usaha</div>
+  <div class="section-title">Kategori UMKM</div>
+  <div class="section-sub">Sidrap memiliki beragam sektor UMKM yang berkembang, dari kuliner khas hingga kerajinan tangan dan produk pertanian.</div>
+  <div class="kategori-grid">
+    <div class="kat-card" onclick="sendPrompt('Ceritakan lebih lanjut tentang UMKM kuliner di Sidenreng Rappang')">
+      <div class="kat-icon">🍚</div>
+      <div class="kat-name">Kuliner & Makanan</div>
+      <div class="kat-count">1.240 usaha</div>
+    </div>
+    <div class="kat-card" onclick="sendPrompt('Apa saja produk pertanian unggulan UMKM Sidrap?')">
+      <div class="kat-icon">🌾</div>
+      <div class="kat-name">Pertanian & Olahan</div>
+      <div class="kat-count">980 usaha</div>
+    </div>
+    <div class="kat-card" onclick="sendPrompt('Ceritakan kerajinan tangan khas Sidenreng Rappang')">
+      <div class="kat-icon">🧵</div>
+      <div class="kat-name">Kerajinan Tangan</div>
+      <div class="kat-count">620 usaha</div>
+    </div>
+    <div class="kat-card">
+      <div class="kat-icon">👗</div>
+      <div class="kat-name">Fashion & Batik</div>
+      <div class="kat-count">480 usaha</div>
+    </div>
+    <div class="kat-card">
+      <div class="kat-icon">🐄</div>
+      <div class="kat-name">Peternakan</div>
+      <div class="kat-count">390 usaha</div>
+    </div>
+    <div class="kat-card">
+      <div class="kat-icon">🐟</div>
+      <div class="kat-name">Perikanan & Tambak</div>
+      <div class="kat-count">275 usaha</div>
+    </div>
+    <div class="kat-card">
+      <div class="kat-icon">🏗️</div>
+      <div class="kat-name">Jasa & Konstruksi</div>
+      <div class="kat-count">145 usaha</div>
+    </div>
+    <div class="kat-card">
+      <div class="kat-icon">💻</div>
+      <div class="kat-name">Digital & Teknologi</div>
+      <div class="kat-count">71 usaha</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRODUK UNGGULAN -->
+<section id="produk">
+  <div class="section-label">Produk Unggulan</div>
+  <div class="section-title">Kekayaan Produk Lokal Sidrap</div>
+  <div class="section-sub">Produk-produk UMKM Sidrap dikenal kualitasnya dan telah menembus pasar regional maupun nasional.</div>
+  <div class="produk-grid">
+    <div class="produk-card">
+      <div class="produk-img" style="background:#FEF9EC;">🍚</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-pertanian">Pertanian</span>
+        <div class="produk-name">Beras Sidrap Premium</div>
+        <div class="produk-desc">Beras berkualitas tinggi dari lumbung padi terbesar Sulawesi Selatan, dikenal harum dan pulen.</div>
+        <div class="produk-price">Rp 14.000 / kg</div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img" style="background:#FFF7ED;">🍢</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-kuliner">Kuliner</span>
+        <div class="produk-name">Dangke Susu Kerbau</div>
+        <div class="produk-desc">Keju tradisional khas Sidrap dari susu kerbau, tekstur lembut dengan cita rasa gurih unik.</div>
+        <div class="produk-price">Rp 25.000 / bungkus</div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img" style="background:#F0FDF4;">🌿</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-pertanian">Pertanian</span>
+        <div class="produk-name">Minyak Kelapa Murni</div>
+        <div class="produk-desc">Virgin coconut oil proses cold-press dari kelapa lokal, tanpa bahan pengawet dan ramah kesehatan.</div>
+        <div class="produk-price">Rp 45.000 / 250ml</div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img" style="background:#EEF2FF;">🧶</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-kerajinan">Kerajinan</span>
+        <div class="produk-name">Tenun Sutera Bugis</div>
+        <div class="produk-desc">Kain tenun sutera motif khas Bugis yang dibuat secara manual oleh pengrajin berpengalaman.</div>
+        <div class="produk-price">Rp 350.000 / lembar</div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img" style="background:#FDF4FF;">🎋</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-kerajinan">Kerajinan</span>
+        <div class="produk-name">Anyaman Bambu & Rotan</div>
+        <div class="produk-desc">Perabot dan aksesori rumah dari bambu dan rotan pilihan, desain modern bernuansa lokal.</div>
+        <div class="produk-price">Rp 75.000 – 400.000</div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img" style="background:#FFF0F3;">🌶️</div>
+      <div class="produk-body">
+        <span class="produk-badge badge-kuliner">Kuliner</span>
+        <div class="produk-name">Sambal & Bumbu Khas</div>
+        <div class="produk-desc">Aneka sambal dan bumbu masak otentik khas Bugis Sidrap, tersedia dalam kemasan siap kirim.</div>
+        <div class="produk-price">Rp 18.000 / botol</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PELAKU USAHA -->
+<section id="pelaku">
+  <div class="section-label">Pelaku Usaha</div>
+  <div class="section-title">UMKM Terpilih Sidrap</div>
+  <div class="section-sub">Beberapa pelaku UMKM yang telah mendapat pembinaan dan sertifikasi dari Dinas Koperasi & UMKM Kabupaten Sidrap.</div>
+  <div class="umkm-list">
+    <div class="umkm-row">
+      <div class="umkm-avatar">🍚</div>
+      <div class="umkm-info">
+        <div class="umkm-nm">UD. Berkah Padi Sidrap</div>
+        <div class="umkm-meta">Pemilik: Hj. Rahmawati · Kec. Maritenggae · Berdiri 2012</div>
+      </div>
+      <div class="umkm-tag">Pertanian</div>
+      <div class="umkm-status"></div>
+    </div>
+    <div class="umkm-row">
+      <div class="umkm-avatar">🧵</div>
+      <div class="umkm-info">
+        <div class="umkm-nm">Sanggar Tenun Bugis Pallawa</div>
+        <div class="umkm-meta">Pemilik: Ibu Sitti Murni · Kec. Panca Rijang · Berdiri 2008</div>
+      </div>
+      <div class="umkm-tag">Kerajinan</div>
+      <div class="umkm-status"></div>
+    </div>
+    <div class="umkm-row">
+      <div class="umkm-avatar">🍢</div>
+      <div class="umkm-info">
+        <div class="umkm-nm">CV. Dangke Asli Enrekang-Sidrap</div>
+        <div class="umkm-meta">Pemilik: Pak Burhan · Kec. Watang Pulu · Berdiri 2015</div>
+      </div>
+      <div class="umkm-tag">Kuliner</div>
+      <div class="umkm-status"></div>
+    </div>
+    <div class="umkm-row">
+      <div class="umkm-avatar">🌿</div>
+      <div class="umkm-info">
+        <div class="umkm-nm">Usaha Kelapa Murni Sidrap</div>
+        <div class="umkm-meta">Pemilik: Hendra Saputra · Kec. Dua Pitue · Berdiri 2018</div>
+      </div>
+      <div class="umkm-tag">Pertanian</div>
+      <div class="umkm-status"></div>
+    </div>
+    <div class="umkm-row">
+      <div class="umkm-avatar">🐄</div>
+      <div class="umkm-info">
+        <div class="umkm-nm">Koperasi Peternak Sidrap Mandiri</div>
+        <div class="umkm-meta">Ketua: Andi Jamaluddin · Kec. Tellu Limpoe · Berdiri 2010</div>
+      </div>
+      <div class="umkm-tag">Peternakan</div>
+      <div class="umkm-status"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- BERITA -->
+<section>
+  <div class="section-label">Info & Berita</div>
+  <div class="section-title">Berita Terkini UMKM Sidrap</div>
+  <div class="berita-grid">
+    <div class="berita-card">
+      <div class="berita-tgl">10 April 2026</div>
+      <div class="berita-judul">Pameran Produk UMKM Sidrap Raih Antusias Besar di Expo Sulsel 2026</div>
+      <div class="berita-ringkas">Lebih dari 80 pelaku UMKM Sidrap tampil dalam pameran tahunan Sulawesi Selatan dan berhasil membukukan transaksi signifikan.</div>
+      <span class="berita-tag">Pameran</span>
+    </div>
+    <div class="berita-card">
+      <div class="berita-tgl">2 April 2026</div>
+      <div class="berita-judul">Pelatihan Digital Marketing Gratis untuk 200 Pelaku UMKM Sidrap</div>
+      <div class="berita-ringkas">Dinas Koperasi & UMKM membuka pendaftaran pelatihan pemasaran digital gratis bekerja sama dengan Telkom Indonesia.</div>
+      <span class="berita-tag">Pelatihan</span>
+    </div>
+    <div class="berita-card">
+      <div class="berita-tgl">25 Maret 2026</div>
+      <div class="berita-judul">Beras Sidrap Tembus Pasar Ekspor ke Malaysia dan Brunei</div>
+      <div class="berita-ringkas">Tiga produsen beras premium Sidrap resmi mendapat izin ekspor ke dua negara ASEAN, membuka peluang pasar internasional.</div>
+      <span class="berita-tag">Ekspor</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROGRAM -->
+<section id="program">
+  <div class="section-label">Program Pemerintah</div>
+  <div class="section-title">Program Pemberdayaan UMKM</div>
+  <div class="section-sub">Berbagai program aktif dari Pemkab Sidrap untuk mendukung pertumbuhan UMKM lokal.</div>
+  <div class="program-grid">
+    <div class="prog-card" style="background:#F0FDF4; border-color:#BBF7D0;">
+      <div class="prog-icon">💰</div>
+      <div class="prog-title">KUR Sidrap Maju</div>
+      <div class="prog-desc">Kredit Usaha Rakyat bunga rendah 3% untuk UMKM mikro dan kecil, plafon hingga Rp 50 juta.</div>
+      <div class="prog-tgl" style="color:#166534;">Pendaftaran: April – Juni 2026</div>
+    </div>
+    <div class="prog-card" style="background:#EFF6FF; border-color:#BFDBFE;">
+      <div class="prog-icon">🎓</div>
+      <div class="prog-title">Pelatihan & Sertifikasi</div>
+      <div class="prog-desc">Program pelatihan manajemen usaha, halal certification, dan izin PIRT untuk pelaku UMKM.</div>
+      <div class="prog-tgl" style="color:#1E40AF;">Berlangsung: Sepanjang 2026</div>
+    </div>
+    <div class="prog-card" style="background:#FFF7ED; border-color:#FED7AA;">
+      <div class="prog-icon">📦</div>
+      <div class="prog-title">Akses Pasar & E-Commerce</div>
+      <div class="prog-desc">Fasilitasi onboarding ke Tokopedia, Shopee, dan marketplace lokal, termasuk pelatihan foto produk.</div>
+      <div class="prog-tgl" style="color:#92400E;">Daftar: Mulai Mei 2026</div>
+    </div>
+    <div class="prog-card" style="background:#FDF4FF; border-color:#E9D5FF;">
+      <div class="prog-icon">🤝</div>
+      <div class="prog-title">Kemitraan Korporasi</div>
+      <div class="prog-desc">Program kemitraan UMKM dengan perusahaan besar (CSR), termasuk kontrak pengadaan produk lokal.</div>
+      <div class="prog-tgl" style="color:#6B21A8;">Info: Dinas UMKM Sidrap</div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak" style="padding-top:0;">
+  <div class="kontak-wrap">
+    <h2>Hubungi Dinas Koperasi & UMKM Sidrap</h2>
+    <p>Kami siap membantu Anda memulai, mengembangkan, dan memperluas usaha di Kabupaten Sidenreng Rappang.</p>
+    <div class="kontak-grid">
+      <div class="kontak-item">
+        <div class="ki-icon">📍</div>
+        <div class="ki-label">Alamat</div>
+        <div class="ki-val">Jl. Harapan No. 12, Pangkajene, Sidrap</div>
+      </div>
+      <div class="kontak-item">
+        <div class="ki-icon">📞</div>
+        <div class="ki-label">Telepon</div>
+        <div class="ki-val">(0421) 3210-5678</div>
+      </div>
+      <div class="kontak-item">
+        <div class="ki-icon">✉️</div>
+        <div class="ki-label">Email</div>
+        <div class="ki-val">umkm@sidrapkab.go.id</div>
+      </div>
+      <div class="kontak-item">
+        <div class="ki-icon">🕐</div>
+        <div class="ki-label">Jam Layanan</div>
+        <div class="ki-val">Sen–Jum, 08.00–16.00 WITA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Portal UMKM Kabupaten <span>Sidenreng Rappang</span> · Dinas Koperasi, UKM, Perindustrian & Perdagangan
+</footer>
